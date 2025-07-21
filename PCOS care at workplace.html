@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Could It Be PCOS?</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for Inter font and general body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ff4152; /* Background color */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            color: #470b33; /* Default text color for body */
+        }
+        /* Custom styles for button hover effects */
+        .btn-primary {
+            background-color: #ff4152; /* Primary button color */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e03a4b; /* Darker shade for hover */
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            transition: background-color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #ffebee; /* Lighter red on hover */
+            border-color: #e53e3e; /* Red border on hover */
+            transform: translateY(-2px);
+        }
+        /* Styling for the video container to maintain aspect ratio */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background-color: #000; /* Black background for video placeholder */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+
+        /* Modal specific styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Semi-transparent #ff4152 */
+            background-color: rgba(255, 65, 82, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top */
+        }
+        .modal-content {
+            background-color: #fff9f1; /* Disclaimer modal content background - light */
+            padding: 2rem 3rem; /* Increased horizontal padding */
+            border-radius: 0.75rem; /* Ensure all corners are rounded */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            max-width: 700px; /* Increased max-width */
+            width: 90%; /* Fluid width up to max-width */
+            max-height: 85vh; /* Slightly increased max-height */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            color: #470b33; /* Text color for disclaimer modal content - dark */
+        }
+        /* Ensure text inside modal is readable */
+        .modal-content h2, .modal-content p, .modal-content li {
+            color: #470b33; /* Ensure all text inside the modal is dark for contrast */
+        }
+        /* Specific list item color for nested lists */
+        .modal-content ul.list-circle li {
+             color: #470b33;
+        }
+        /* Style for the disclaimer button to match the main button color */
+        #close-disclaimer-button {
+            background-color: #ff4152; /* Match the main button color */
+            color: #fff9f1; /* White text for contrast */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #close-disclaimer-button:hover {
+            background-color: #e03a4b; /* Darker shade on hover */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <h2 class="text-2xl font-bold mb-4">Welcome to the PCOS care project!</h2>
+            <p class="mb-4 text-left leading-relaxed">
+                Hello! this project demonstrates a responsive web form with interactive elements and its integration with a backend service for data collection.
+            </p>
+            <p class="mb-4 text-left leading-relaxed">
+                <strong>Project creation details:</strong>
+                <ul class="list-disc list-inside mb-4 text-left">
+                    <li><strong>Development:</strong> the entire project, including this HTML/CSS/JavaScript code, was generated and refined using <strong>Gemini</strong>.</li>
+                    <li><strong>Video content:</strong>
+                        <ul class="list-disc list-inside ml-4"> <!-- Changed to list-disc for bullet points -->
+                            <li><strong>Flow Veo 3 Fast</strong> for video generation.</li>
+                            <li><strong>ElevenLabs</strong> for the voiceover (VO).</li>
+                            <li><strong>Canva</strong> to stitch the video elements together.</li>
+                            <li><strong>Adobe Express</strong> for adding subtitles.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </p>
+            <p class="mb-4 text-left leading-relaxed">
+                <strong>What this project contains:</strong>
+                <ul class="list-disc list-inside mb-4 text-left">
+                    <li>An introductory section with a video.</li>
+                    <li>A "Could it be PCOS?" questionnaire with yes/no questions.</li>
+                    <li>Optional fields for name and email.</li>
+                    <li>Dynamic AI-generated messages based on questionnaire responses.</li>
+                </ul>
+            </p>
+            <p class="mb-6 text-left leading-relaxed">
+                <strong>Important Note:</strong> The questionnaire uses sample questions and is not comprehensive. The results are illustrative and not a medical diagnosis. The video visuals also have significant scope for further improvement. This project primarily serves to demonstrate the potential and scope of what can be achieved with these tools and integration methods.
+            </p>
+            <p class="mb-6 text-left leading-relaxed">
+                <strong>Disclaimer on Branding:</strong> The Plum logo and branding used in this project are for visual demonstration purposes only, to illustrate how a native web application like this one might look. I do not hold any rights or ownership over PlumHQ's intellectual property.
+            </p>
+            <p class="mb-6 text-left leading-relaxed">
+                <strong>How data is handled:</strong>
+                When you submit the form, your responses, along with your name, email (if provided), and the AI-generated message, are securely sent to a <strong>Google Sheet</strong>. This is facilitated by a custom <strong>Google Apps Script</strong> that acts as a backend endpoint. The data is stored in the Google Sheet for potential future analysis or email retargeting, demonstrating a full-stack data collection flow.
+            </p>
+            <p class="mb-6 text-left leading-relaxed">
+                <strong>Site hosting:</strong>
+                This interactive form is hosted as a static website, typically deployed using services like <strong>GitHub Pages</strong>, <strong>Netlify</strong>, or <strong>Vercel</strong>, making it easily shareable via a simple URL.
+            </p>
+            <button id="close-disclaimer-button" class="w-full py-3 px-4 rounded-lg font-semibold text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-[#ff4152] focus:ring-offset-2">
+                Understand & Proceed
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container (Initially Hidden) -->
+    <div id="main-content" class="hidden flex flex-col items-center w-full">
+        <!-- Plum Logo as a separate block -->
+        <div class="flex justify-center mb-6">
+            <img src="https://cdn.prod.website-files.com/63413ad4dec8a91fe53f4fb0/654b5e491209feae0956e9d5_Footer%20image%20(1)..avif" alt="Plum Health Logo" class="h-16 w-auto">
+        </div>
+
+        <!-- Introduction and Video Section -->
+        <div id="intro-video-section" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl text-[#470b33] mb-6">
+            <h2 class="text-2xl font-bold text-center mb-4">Understanding PCOS and workplace health</h2>
+            <p class="mb-6 leading-relaxed">
+                Polycystic ovary syndrome (PCOS) is a common hormonal condition that can affect women’s health, wellbeing, and productivity at work. Since many women are unaware they have PCOS, early screening is important. Workplaces can actively support employees by promoting regular check-ups and making it easy to access PCOS screening through health plans on Plum. This not only helps individuals take control of their health but also builds a healthier, more inclusive workplace culture.
+            </p>
+
+            <!-- Video Embed - Using the provided YouTube link -->
+            <div class="video-container mb-6">
+                <iframe src="https://www.youtube.com/embed/P7W7i3W7DSA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <button id="start-form-button" class="w-full text-white py-3 px-4 rounded-lg font-semibold text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-[#ff4152] focus:ring-offset-2 btn-primary">
+                Start your PCOS checkup
+            </button>
+        </div>
+
+        <!-- PCOS Checkup Form (Initially Hidden) -->
+        <div id="form-container" class="bg-[#fff9f1] p-8 rounded-xl shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl hidden">
+            <h1 class="text-3xl font-bold text-center text-[#470b33] mb-2">Could it be PCOS?</h1>
+            <p class="text-center text-[#470b33] mb-8">A quick, private 1-minute check for signs of hormonal imbalance.</p>
+
+            <!-- IMPORTANT: Ensure the 'action' attribute below is set to your deployed Google Apps Script Web app URL -->
+            <form id="pcos-form" class="space-y-6" action="https://script.google.com/macros/s/AKfycbyMpo8xSQQN0p1dF2f_3ji1fKRoqd8PuhUeu53cvOnO5Vm5bRKkVtG6AqCsapM5NcxW/exec" method="POST">
+                <!-- Question 1 -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-lg font-semibold text-[#470b33] mb-3">1. Have your periods been irregular in the last 6 months?</p>
+                    <div class="flex flex-col space-y-2">
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q1" value="Yes" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q1" value="No" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-lg font-semibold text-[#470b33] mb-3">2. Do you often feel tired or low energy even after a full night’s sleep?</p>
+                    <div class="flex flex-col space-y-2">
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q2" value="Yes" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q2" value="No" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-lg font-semibold text-[#470b33] mb-3">3. Have you experienced sudden weight gain or trouble losing weight?</p>
+                    <div class="flex flex-col space-y-2">
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q3" value="Yes" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q3" value="No" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-lg font-semibold text-[#470b33] mb-3">4. Have you noticed increased acne, facial hair, or hair thinning?</p>
+                    <div class="flex flex-col space-y-2">
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q4" value="Yes" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q4" value="No" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <p class="text-lg font-semibold text-[#470b33] mb-3">5. Do you often feel anxious, moody, or irritable?</p>
+                    <div class="flex flex-col space-y-2">
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q5" value="Yes" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center text-[#470b33]">
+                            <input type="radio" name="q5" value="No" class="form-radio h-5 w-5 text-[#ff4152] rounded-full focus:ring-[#ff4152]" required>
+                            <span class="ml-2">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Optional Question 6: First Name -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <label for="first-name" class="block text-lg font-semibold text-[#470b33] mb-3">What’s your first name?<span class="text-red-500">*</span></label>
+                    <input type="text" id="first-name" name="first-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#ff4152] focus:border-[#ff4152] sm:text-sm" placeholder="Your first name" required>
+                </div>
+
+                <!-- Optional Question 7: Email -->
+                <div class="bg-pink-50 p-4 rounded-lg shadow-sm">
+                    <label for="email" class="block text-lg font-semibold text-[#470b33] mb-3">Enter your email for a personalized summary.<span class="text-red-500">*</span></label>
+                    <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#ff4152] focus:border-[#ff4152] sm:text-sm" placeholder="your.email@example.com" required>
+                </div>
+
+                <!-- Hidden fields are no longer strictly necessary if data is appended directly to FormData,
+                     but keeping them doesn't hurt and provides a fallback. -->
+                <input type="hidden" id="yes-count-hidden" name="yesCount">
+                <input type="hidden" id="ai-message-hidden" name="aiMessage">
+
+                <button type="submit" class="w-full text-white py-3 px-4 rounded-lg font-semibold text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-[#ff4152] focus:ring-offset-2 btn-primary">
+                    Submit
+                </button>
+            </form>
+
+            <!-- Result Screen (Initially Hidden) -->
+            <div id="result-screen" class="hidden text-center p-8">
+                <h2 class="text-2xl font-bold text-[#470b33] mb-4">Your PCOS checkup result</h2>
+                <p id="ai-message" class="text-lg text-[#470b33] mb-6 leading-relaxed">
+                    <!-- AI-generated message will be inserted here -->
+                </p>
+                <a href="https://www.plumhq.com/" target="_blank" class="inline-block w-full md:w-auto bg-[#ff4152] text-white py-3 px-6 rounded-lg font-semibold text-lg shadow-md hover:bg-[#e03a4b] focus:outline-none focus:ring-2 focus:ring-[#ff4152] focus:ring-offset-2">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const disclaimerModal = document.getElementById('disclaimer-modal');
+            const closeDisclaimerButton = document.getElementById('close-disclaimer-button');
+            const mainContent = document.getElementById('main-content');
+            const introVideoSection = document.getElementById('intro-video-section');
+            const startFormButton = document.getElementById('start-form-button');
+            const pcosFormContainer = document.getElementById('form-container');
+            const pcosForm = document.getElementById('pcos-form');
+            const resultScreen = document.getElementById('result-screen');
+            const aiMessageElement = document.getElementById('ai-message');
+
+            // Initially hide the main content and form/result screens
+            mainContent.classList.add('hidden');
+            pcosFormContainer.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+
+            // Show the disclaimer modal on page load
+            disclaimerModal.classList.remove('hidden');
+
+            // Event listener for closing the disclaimer modal
+            closeDisclaimerButton.addEventListener('click', () => {
+                disclaimerModal.classList.add('hidden'); // Hide the modal
+                mainContent.classList.remove('hidden'); // Show the main content
+                window.scrollTo(0, 0); // Scroll to the top of the page
+            });
+
+            // Event listener for the "Start Your PCOS Checkup" button
+            startFormButton.addEventListener('click', () => {
+                introVideoSection.classList.add('hidden'); // Hide the intro and video
+                pcosFormContainer.classList.remove('hidden'); // Show the form container
+                window.scrollTo(0, 0); // Scroll to the top of the page
+            });
+
+            pcosForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission via JavaScript
+
+                let yesCount = 0;
+                const formDataObject = {};
+
+                // Get values from form inputs and populate formDataObject
+                const formElements = pcosForm.elements;
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.name && (element.type !== 'radio' || element.checked)) {
+                        formDataObject[element.name] = element.value;
+                    }
+                }
+
+                // Count "Yes" answers for the 5 questions
+                for (let i = 1; i <= 5; i++) {
+                    const questionName = `q${i}`;
+                    if (formDataObject[questionName] === 'Yes') {
+                        yesCount++;
+                    }
+                }
+
+                let message = "";
+                if (yesCount <= 1) {
+                    message = "Based on your responses, there's a low possibility of PCOS. It's always good to stay informed about your health!";
+                } else if (yesCount >= 2 && yesCount <= 3) {
+                    message = "Your responses suggest a mild risk of PCOS. It might be worth checking with a healthcare professional for further evaluation.";
+                } else if (yesCount >= 4 && yesCount <= 5) {
+                    message = "Your responses show strong signals that could indicate PCOS. We strongly recommend consulting a healthcare professional for a proper diagnosis and guidance.";
+                }
+
+                aiMessageElement.textContent = message; // Set the AI-generated message on the result screen
+
+                // Add yesCount and aiMessage to the formDataObject
+                formDataObject.yesCount = yesCount;
+                formDataObject.aiMessage = message;
+
+                // --- IMPORTANT CHANGE HERE ---
+                // Show the result screen immediately.
+                pcosForm.classList.add('hidden'); // Hide the form itself
+                resultScreen.classList.remove('hidden'); // Show the result screen
+
+                // Perform the fetch request in the background, without blocking the UI.
+                fetch(pcosForm.action, {
+                    method: 'POST',
+                    body: new URLSearchParams(formDataObject)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Form data successfully sent to Google Sheet in the background.");
+                    } else {
+                        console.error("Failed to send data to Google Sheet in the background.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Network error during background submission:", error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
